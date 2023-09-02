@@ -237,7 +237,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             "birthdate": controller.text
                                           });
                                         }
-                                        setState(() {});
+                                        setState(() {
+                                          name.clear();
+                                        });
                                         Navigator.pop(context);
                                         //print(persons);
                                       },
@@ -448,6 +450,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            // Container(
+            //   width: double.infinity,
+            //   height: MediaQuery.sizeOf(context).width * 0.5,
+            //   color: Color.fromARGB(255, 91, 72, 177),
+            // )
           ],
         ),
       ),

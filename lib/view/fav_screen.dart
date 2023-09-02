@@ -1,3 +1,4 @@
+import 'package:age_calculator/provider/calculator_provider.dart';
 import 'package:flutter/material.dart';
 
 class FavScreen extends StatefulWidget {
@@ -40,34 +41,50 @@ class _FavScreenState extends State<FavScreen> {
         centerTitle: true,
       ),
       body: userInformation == null || userInformation.isEmpty
-          ? Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/data.png"),
-                  fit: BoxFit.cover,
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Image.asset(
+                    width: MediaQuery.sizeOf(context).width * 0.5,
+                    "assets/empty-box.png",
+                    color: Colors.white,
+                  ),
                 ),
-              ),
+                Text(
+                  "No data",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                )
+              ],
             )
           : ListView.builder(
               itemCount: userInformation.length,
               itemBuilder: (context, index) {
-                return Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                            width: MediaQuery.sizeOf(context).width / 2,
-                            child: Text(userInformation[index]["name"])),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                            width: MediaQuery.sizeOf(context).width / 2,
-                            child: Text(userInformation[index]["birthdate"])),
-                      ),
-                    ],
+                return Dismissible(
+                  onDismissed: (direction) async {
+                    await CalculatorProvider.userlist.deleteAt(index);
+                    userInformation.removeAt(index);
+                  },
+                  key: UniqueKey(),
+                  direction: DismissDirection.startToEnd,
+                  child: Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                              width: MediaQuery.sizeOf(context).width / 2,
+                              child: Text(userInformation[index]["name"])),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                              width: MediaQuery.sizeOf(context).width / 2,
+                              child: Text(userInformation[index]["birthdate"])),
+                        ),
+                      ],
+                    ),
                   ),
                 );
                 // return Padding(
