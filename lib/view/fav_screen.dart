@@ -43,7 +43,7 @@ class _FavScreenState extends State<FavScreen> {
           ? Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/a.png"),
+                  image: AssetImage("assets/data.png"),
                   fit: BoxFit.cover,
                 ),
               ),
